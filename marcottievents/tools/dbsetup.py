@@ -66,8 +66,8 @@ def setup_user_input():
     end_yr = prompt.query('End season year', default='2020', validators=[validators.IntegerValidator()])
     print("#### Data file setup ####")
     supplier = prompt.query('Name of data supplier:')
-    is_club_db = prompt.options('Is this a club database?')
-    spanish = prompt.options('Are country names in Spanish?')
+    is_club_db = prompt.options('Is this a club database?', binary_options)
+    spanish = prompt.options('Are country names in Spanish?', binary_options)
     using_xml = prompt.options('Are XML files stored locally?', binary_options)
     if using_xml:
         xml_data_dir = prompt.query('Directory containing XML data files:', default='.',
