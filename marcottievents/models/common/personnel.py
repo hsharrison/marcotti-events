@@ -22,7 +22,7 @@ class Positions(BaseSchema):
     type = Column(enums.PositionType.db_type())
 
     def __repr__(self):
-        return u"<Position(name={0}, type={1})>".format(self.name, self.type.value)
+        return "<Position(name={0}, type={1})>".format(self.name, self.type.value)
 
 
 class Persons(BaseSchema):
@@ -64,16 +64,16 @@ class Persons(BaseSchema):
 
         :return: Person's full name.
         """
-        if all([self.nick_name is not None, self.nick_name != u'']):
+        if all([self.nick_name is not None, self.nick_name != '']):
             return self.nick_name
         else:
             if self.order == enums.NameOrderType.western:
-                return u"{} {}".format(self.known_first_name or self.first_name, self.last_name)
+                return "{} {}".format(self.known_first_name or self.first_name, self.last_name)
             elif self.order == enums.NameOrderType.middle:
-                return u"{} {} {}".format(self.known_first_name or self.first_name,
+                return "{} {} {}".format(self.known_first_name or self.first_name,
                                           self.middle_name, self.last_name)
             elif self.order == enums.NameOrderType.eastern:
-                return u"{} {}".format(self.last_name, self.first_name)
+                return "{} {}".format(self.last_name, self.first_name)
 
     @full_name.expression
     def full_name(cls):
@@ -93,12 +93,12 @@ class Persons(BaseSchema):
                 [
                     (cls.order == enums.NameOrderType.middle,
                      case([(cls.known_first_name != None, cls.known_first_name)], else_=cls.first_name) +
-                     u' ' + cls.middle_name + u' ' + cls.last_name),
-                    (cls.order == enums.NameOrderType.eastern, cls.last_name + u' ' + cls.first_name)
+                     ' ' + cls.middle_name + ' ' + cls.last_name),
+                    (cls.order == enums.NameOrderType.eastern, cls.last_name + ' ' + cls.first_name)
                 ],
                 else_=case(
                     [(cls.known_first_name != None, cls.known_first_name)],
-                    else_=cls.first_name) + u' ' + cls.last_name))
+                    else_=cls.first_name) + ' ' + cls.last_name))
 
     @hybrid_property
     def official_name(self):
@@ -108,9 +108,9 @@ class Persons(BaseSchema):
         :return: Person's legal name.
         """
         if self.order == enums.NameOrderType.eastern:
-            return u"{} {}".format(self.last_name, self.first_name)
+            return "{} {}".format(self.last_name, self.first_name)
         else:
-            return u" ".join([getattr(self, field) for field in
+            return " ".join([getattr(self, field) for field in
                               ['first_name', 'middle_name', 'last_name', 'second_last_name']
                               if getattr(self, field) is not None])
 
@@ -122,12 +122,12 @@ class Persons(BaseSchema):
         :return: Person's legal name.
         """
         return case(
-            [(cls.order == enums.NameOrderType.eastern, cls.last_name + u' ' + cls.first_name)],
+            [(cls.order == enums.NameOrderType.eastern, cls.last_name + ' ' + cls.first_name)],
             else_=(
-                case([cls.first_name != None, cls.first_name + u' '], else_=u'') +
-                case([cls.middle_name != None, cls.middle_name + u' '], else_=u'') +
-                case([cls.last_name != None, cls.last_name + u' '], else_=u'') +
-                case([cls.second_last_name != None, cls.second_last_name], else_=u''))
+                case([cls.first_name != None, cls.first_name + ' '], else_='') +
+                case([cls.middle_name != None, cls.middle_name + ' '], else_='') +
+                case([cls.last_name != None, cls.last_name + ' '], else_='') +
+                case([cls.second_last_name != None, cls.second_last_name], else_=''))
         )
 
     @hybrid_method
@@ -165,7 +165,7 @@ class Persons(BaseSchema):
         return cast((reference - cls.birth_date)/365.25 - 0.5, Integer)
 
     def __repr__(self):
-        return u"<Person(name={}, country={}, DOB={})>".format(
+        return "<Person(name={}, country={}, DOB={})>".format(
             self.full_name, self.country.name, self.birth_date.isoformat()).encode('utf-8')
 
 
@@ -185,11 +185,11 @@ class Players(Persons):
     position = relationship('Positions', backref=backref('players'))
 
     def __repr__(self):
-        return u"<Player(name={}, DOB={}, country={}, position={})>".format(
+        return "<Player(name={}, DOB={}, country={}, position={})>".format(
             self.full_name, self.birth_date.isoformat(), self.country.name, self.position.name).encode('utf-8')
 
     def __unicode__(self):
-        return u"<Player(name={}, DOB={}, country={}, position={})>".format(
+        return "<Player(name={}, DOB={}, country={}, position={})>".format(
             self.full_name, self.birth_date.isoformat(), self.country.name, self.position.name)
 
 
@@ -210,11 +210,11 @@ class PlayerHistory(BaseSchema):
     player = relationship('Players', backref=backref('history'))
 
     def __repr__(self):
-        return u"<PlayerHistory(name={}, date={}, height={:.2f}, weight={:d})>".format(
+        return "<PlayerHistory(name={}, date={}, height={:.2f}, weight={:d})>".format(
             self.player.full_name, self.date.isoformat(), self.height, self.weight).encode('utf-8')
 
     def __unicode__(self):
-        return u"<PlayerHistory(name={}, date={}, height={:.2f}, weight={:d})>".format(
+        return "<PlayerHistory(name={}, date={}, height={:.2f}, weight={:d})>".format(
             self.player.full_name, self.date.isoformat(), self.height, self.weight)
 
 
@@ -231,11 +231,11 @@ class Managers(Persons):
     person_id = Column(GUID, ForeignKey('persons.person_id'))
 
     def __repr__(self):
-        return u"<Manager(name={}, DOB={}, country={})>".format(
+        return "<Manager(name={}, DOB={}, country={})>".format(
             self.full_name, self.birth_date.isoformat(), self.country.name).decode('utf-8')
 
     def __unicode__(self):
-        return u"<Manager(name={}, DOB={}, country={})>".format(
+        return "<Manager(name={}, DOB={}, country={})>".format(
             self.full_name, self.birth_date.isoformat(), self.country.name)
 
 
@@ -252,9 +252,9 @@ class Referees(Persons):
     person_id = Column(GUID, ForeignKey('persons.person_id'))
 
     def __repr__(self):
-        return u"<Referee(name={}, DOB={}, country={})>".format(
+        return "<Referee(name={}, DOB={}, country={})>".format(
             self.full_name, self.birth_date.isoformat(), self.country.name).encode('utf-8')
 
     def __unicode__(self):
-        return u"<Referee(name={}, DOB={}, country={})>".format(
+        return "<Referee(name={}, DOB={}, country={})>".format(
             self.full_name, self.birth_date.isoformat(), self.country.name)

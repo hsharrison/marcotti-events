@@ -11,32 +11,32 @@ import marcottievents.models.common.overview as mco
 
 def test_country_insert(session):
         """Country 001: Insert a single record into Countries table and verify data."""
-        england = mco.Countries(name=u'England', confederation=enums.ConfederationType.europe)
+        england = mco.Countries(name='England', confederation=enums.ConfederationType.europe)
         session.add(england)
         session.commit()
 
         country = session.query(mco.Countries).all()
 
-        assert country[0].name == u'England'
+        assert country[0].name == 'England'
         assert country[0].confederation.value == 'UEFA'
         assert repr(country[0]) == "<Country(id={0}, name=England, confed=UEFA)>".format(country[0].id)
 
 
 def test_country_unicode_insert(session):
     """Country 002: Insert a single record with Unicode characters into Countries table and verify data."""
-    ivory_coast = mco.Countries(name=u"Côte d'Ivoire", confederation=enums.ConfederationType.africa)
+    ivory_coast = mco.Countries(name="Côte d'Ivoire", confederation=enums.ConfederationType.africa)
     session.add(ivory_coast)
 
     country = session.query(mco.Countries).filter_by(confederation=enums.ConfederationType.africa).one()
 
-    assert country.name == u"Côte d'Ivoire"
+    assert country.name == "Côte d'Ivoire"
     assert country.confederation.value == 'CAF'
 
 
 def test_country_name_overflow_error(session):
     """Country 003: Verify error if country name exceeds field length."""
     too_long_name = "blahblah" * 8
-    too_long_country = mco.Countries(name=unicode(too_long_name), confederation=enums.ConfederationType.north_america)
+    too_long_country = mco.Countries(name=str(too_long_name), confederation=enums.ConfederationType.north_america)
     with pytest.raises(DataError):
         session.add(too_long_country)
         session.commit()
@@ -44,29 +44,29 @@ def test_country_name_overflow_error(session):
 
 def test_competition_insert(session):
     """Competition 001: Insert a single record into Competitions table and verify data."""
-    record = mco.Competitions(name=u"English Premier League", level=1)
+    record = mco.Competitions(name="English Premier League", level=1)
     session.add(record)
 
     competition = session.query(mco.Competitions).filter_by(level=1).one()
 
-    assert competition.name == u"English Premier League"
+    assert competition.name == "English Premier League"
     assert competition.level == 1
 
 
 def test_competition_unicode_insert(session):
     """Competition 002: Insert a single record with Unicode characters into Competitions table and verify data."""
-    record = mco.Competitions(name=u"Süper Lig", level=1)
+    record = mco.Competitions(name="Süper Lig", level=1)
     session.add(record)
 
     competition = session.query(mco.Competitions).one()
 
-    assert competition.name == u"Süper Lig"
+    assert competition.name == "Süper Lig"
 
 
 def test_competition_name_overflow_error(session):
     """Competition 003: Verify error if competition name exceeds field length."""
     too_long_name = "leaguename" * 9
-    record = mco.Competitions(name=unicode(too_long_name), level=2)
+    record = mco.Competitions(name=str(too_long_name), level=2)
     with pytest.raises(DataError):
         session.add(record)
         session.commit()
@@ -74,8 +74,8 @@ def test_competition_name_overflow_error(session):
 
 def test_domestic_competition_insert(session):
     """Domestic Competition 001: Insert domestic competition record and verify data."""
-    comp_name = u"English Premier League"
-    comp_country = u"England"
+    comp_name = "English Premier League"
+    comp_country = "England"
     comp_level = 1
     record = mco.DomesticCompetitions(name=comp_name, level=comp_level, country=mco.Countries(
         name=comp_country, confederation=enums.ConfederationType.europe))
@@ -92,7 +92,7 @@ def test_domestic_competition_insert(session):
 
 def test_international_competition_insert(session):
     """International Competition 001: Insert international competition record and verify data."""
-    comp_name = u"UEFA Champions League"
+    comp_name = "UEFA Champions League"
     comp_confed = enums.ConfederationType.europe
     record = mco.InternationalCompetitions(name=comp_name, level=1, confederation=comp_confed)
     session.add(record)
@@ -107,7 +107,7 @@ def test_international_competition_insert(session):
 
 def test_year_insert(session):
     """Year 001: Insert multiple years into Years table and verify data."""
-    years_list = range(1990, 1994)
+    years_list = list(range(1990, 1994))
     for yr in years_list:
         record = mco.Years(yr=yr)
         session.add(record)
@@ -191,9 +191,9 @@ def test_season_singleyr_reference_date(session):
 def test_timezone_insert(session):
     """Timezone 001: Insert timezone records into Timezones table and verify data."""
     timezones = [
-        mco.Timezones(name=u"Europe/Paris", offset=1, confederation=enums.ConfederationType.europe),
-        mco.Timezones(name=u"America/New_York", offset=-5.0, confederation=enums.ConfederationType.north_america),
-        mco.Timezones(name=u"Asia/Kathmandu", offset=+5.75, confederation=enums.ConfederationType.asia)
+        mco.Timezones(name="Europe/Paris", offset=1, confederation=enums.ConfederationType.europe),
+        mco.Timezones(name="America/New_York", offset=-5.0, confederation=enums.ConfederationType.north_america),
+        mco.Timezones(name="Asia/Kathmandu", offset=+5.75, confederation=enums.ConfederationType.asia)
     ]
     session.add_all(timezones)
 
@@ -215,7 +215,7 @@ def test_venue_generic_insert(session, venue_data):
 
     emirates = session.query(mco.Venues).one()
 
-    assert repr(emirates) == u"<Venue(name=Emirates Stadium, city=London, country=England)>"
+    assert repr(emirates) == "<Venue(name=Emirates Stadium, city=London, country=England)>"
     assert emirates.region is None
     assert emirates.latitude == 51.555000
     assert emirates.longitude == -0.108611
@@ -225,7 +225,7 @@ def test_venue_generic_insert(session, venue_data):
 
 def test_venue_empty_coordinates(session, venue_data):
     """Venue 002: Verify that lat/long/alt coordinates are zeroed if not present in Venues object definition."""
-    revised_venue_data = {key: value for key, value in venue_data.items()
+    revised_venue_data = {key: value for key, value in list(venue_data.items())
                           if key not in ['latitude', 'longitude', 'altitude']}
     session.add(mco.Venues(**revised_venue_data))
 
@@ -278,10 +278,10 @@ def test_venue_history_insert(session, venue_data, venue_config):
 
     record = session.query(mco.VenueHistory).one()
 
-    assert repr(record) == u"<VenueHistory(name=Emirates Stadium, date=2006-07-22, " \
-                           u"length=105, width=68, capacity=60361)>"
+    assert repr(record) == "<VenueHistory(name=Emirates Stadium, date=2006-07-22, " \
+                           "length=105, width=68, capacity=60361)>"
     assert record.seats == 60361
-    assert record.surface.description == u"Desso GrassMaster"
+    assert record.surface.description == "Desso GrassMaster"
     assert record.surface.type == enums.SurfaceType.hybrid
 
 
@@ -289,7 +289,7 @@ def test_venue_history_empty_numbers(session, venue_data, venue_config):
     """Venue 007: Verify that length/width/capacity/seats fields are set to default if missing in VenueHistory data."""
     emirates = mco.Venues(**venue_data)
     venue_config['venue'] = emirates
-    revised_venue_config = {key: value for key, value in venue_config.items()
+    revised_venue_config = {key: value for key, value in list(venue_config.items())
                             if key not in ['length', 'width', 'capacity', 'seats']}
     emirates_config = mco.VenueHistory(**revised_venue_config)
     session.add(emirates_config)
@@ -332,15 +332,15 @@ def test_venue_history_capacity_error(session, venue_data, venue_config):
 def test_surface_generic_insert(session):
     """Playing Surface 001: Insert playing surface data into Surfaces model and verify data."""
     surfaces = [
-        mco.Surfaces(description=u"Perennial ryegrass", type=enums.SurfaceType.natural),
-        mco.Surfaces(description=u"Desso GrassMaster", type=enums.SurfaceType.hybrid),
-        mco.Surfaces(description=u"FieldTurf", type=enums.SurfaceType.artificial)
+        mco.Surfaces(description="Perennial ryegrass", type=enums.SurfaceType.natural),
+        mco.Surfaces(description="Desso GrassMaster", type=enums.SurfaceType.hybrid),
+        mco.Surfaces(description="FieldTurf", type=enums.SurfaceType.artificial)
     ]
     session.add_all(surfaces)
 
     natural = session.query(mco.Surfaces).filter_by(type=enums.SurfaceType.natural).one()
 
-    assert repr(natural) == u"<Surface(description=Perennial ryegrass, type=Natural)>"
+    assert repr(natural) == "<Surface(description=Perennial ryegrass, type=Natural)>"
 
 
 def test_surface_empty_description_error(session):

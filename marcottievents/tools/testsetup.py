@@ -38,5 +38,5 @@ def main():
     with open(test_config_file, 'w') as g:
         result = template.render(setup_dict)
         g.write(result)
-        print("Configured {}".format(test_config_file))
+        print(("Configured {}".format(test_config_file)))
     print("#### Setup complete ####")

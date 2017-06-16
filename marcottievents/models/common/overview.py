@@ -28,7 +28,7 @@ class Countries(BaseSchema):
     Index('countries_indx', 'name')
 
     def __repr__(self):
-        return u"<Country(id={0}, name={1}, trigram={2}, confed={3})>".format(
+        return "<Country(id={0}, name={1}, trigram={2}, confed={3})>".format(
             self.id, self.name, self.code, self.confederation.value).encode('utf-8')
 
 
@@ -139,7 +139,7 @@ class DomesticCompetitions(Competitions):
     country = relationship('Countries', backref=backref('competitions'))
 
     def __repr__(self):
-        return u"<DomesticCompetition(name={0}, country={1}, level={2})>".format(
+        return "<DomesticCompetition(name={0}, country={1}, level={2})>".format(
             self.name, self.country.name, self.level).encode('utf-8')
 
 
@@ -152,7 +152,7 @@ class InternationalCompetitions(Competitions):
     confederation = Column(enums.ConfederationType.db_type())
 
     def __repr__(self):
-        return u"<InternationalCompetition(name={0}, confederation={1})>".format(
+        return "<InternationalCompetition(name={0}, confederation={1})>".format(
             self.name, self.confederation.value).encode('utf-8')
 
 
@@ -179,7 +179,7 @@ class Venues(BaseSchema):
     Index('venues_indx', 'name', 'city', 'country_id')
 
     def __repr__(self):
-        return u"<Venue(name={0}, city={1}, country={2})>".format(
+        return "<Venue(name={0}, city={1}, country={2})>".format(
             self.name, self.city, self.country.name).encode('utf-8')
 
 
@@ -204,7 +204,7 @@ class VenueHistory(BaseSchema):
     surface = relationship('Surfaces', backref=backref('venues'))
 
     def __repr__(self):
-        return u"<VenueHistory(name={0}, date={1}, length={2}, width={3}, capacity={4})>".format(
+        return "<VenueHistory(name={0}, date={1}, length={2}, width={3}, capacity={4})>".format(
             self.venue.name, self.eff_date.isoformat(), self.length, self.width, self.capacity).encode('utf-8')
 
 
@@ -220,7 +220,7 @@ class Timezones(BaseSchema):
     Index('timezones_indx', 'name')
 
     def __repr__(self):
-        return u"<Timezone(name={0}, offset={1:+1.2f}, confederation={2})>".format(
+        return "<Timezone(name={0}, offset={1:+1.2f}, confederation={2})>".format(
            self.name, self.offset, self.confederation.value).encode('utf-8')
 
 
@@ -233,4 +233,4 @@ class Surfaces(BaseSchema):
     type = Column(enums.SurfaceType.db_type())
 
     def __repr__(self):
-        return u"<Surface(description={0}, type={1})>".format(self.description, self.type.description).encode('utf-8')
+        return "<Surface(description={0}, type={1})>".format(self.description, self.type.description).encode('utf-8')

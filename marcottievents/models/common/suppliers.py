@@ -13,7 +13,7 @@ class Suppliers(BaseSchema):
     name = Column(Unicode(40), nullable=False)
 
     def __repr__(self):
-        return u"<Supplier(id={0}, name={1})>".format(self.id, self.name).encode('utf-8')
+        return "<Supplier(id={0}, name={1})>".format(self.id, self.name).encode('utf-8')
 
 
 class CountryMap(BaseSchema):

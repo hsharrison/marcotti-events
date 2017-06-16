@@ -157,5 +157,5 @@ def main():
         with open(output_file, 'w') as g:
             result = template.render(setup_dict)
             g.write(result)
-            print("Configured {}".format(output_file))
+            print(("Configured {}".format(output_file)))
     print("#### Setup complete ####")

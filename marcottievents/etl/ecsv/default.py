@@ -13,7 +13,7 @@ class CSVExtractor(BaseCSV):
 
     @staticmethod
     def seasons(start_yr, end_yr):
-        year_range = range(start_yr, end_yr+1)
+        year_range = list(range(start_yr, end_yr+1))
         return [dict(start_year=yr, end_year=yr) for yr in year_range] + \
             [dict(start_year=start, end_year=end) for start, end in zip(year_range[:-1], year_range[1:])]
 

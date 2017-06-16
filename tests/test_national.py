@@ -20,7 +20,7 @@ def natl_match_lineup(session, national_data, person_data, position_data):
     session.add(match)
     session.commit()
 
-    nation = session.query(mco.Countries).filter(mco.Countries.name == u"Mexico").one()
+    nation = session.query(mco.Countries).filter(mco.Countries.name == "Mexico").one()
 
     lineups = [
         mn.NationalMatchLineups(
@@ -45,14 +45,14 @@ def test_natl_friendly_match_insert(session, national_data):
 
     match_from_db = session.query(mn.NationalFriendlyMatches).one()
 
-    assert unicode(match_from_db) == u"<NationalFriendlyMatch(home=France, away=Mexico, " \
-                                     u"competition=International Cup, date=1997-11-12)>"
+    assert str(match_from_db) == "<NationalFriendlyMatch(home=France, away=Mexico, " \
+                                     "competition=International Cup, date=1997-11-12)>"
     assert match_from_db.season.name == "1997-1998"
-    assert match_from_db.competition.confederation.value == u"FIFA"
-    assert match_from_db.venue.name == u"Emirates Stadium"
-    assert match_from_db.home_manager.full_name == u"Arsène Wenger"
-    assert match_from_db.away_manager.full_name == u"Gary Simpson"
-    assert match_from_db.referee.full_name == u"Pierluigi Collina"
+    assert match_from_db.competition.confederation.value == "FIFA"
+    assert match_from_db.venue.name == "Emirates Stadium"
+    assert match_from_db.home_manager.full_name == "Arsène Wenger"
+    assert match_from_db.away_manager.full_name == "Gary Simpson"
+    assert match_from_db.referee.full_name == "Pierluigi Collina"
 
 
 @natl_only
@@ -67,14 +67,14 @@ def test_natl_group_match_insert(session, national_data):
 
     match_from_db = session.query(mn.NationalGroupMatches).one()
 
-    assert unicode(match_from_db) == u"<NationalGroupMatch(home=France, away=Mexico, competition=International Cup, " \
-                                     u"round=First Round, group=C, matchday=2, date=1997-11-12)>"
+    assert str(match_from_db) == "<NationalGroupMatch(home=France, away=Mexico, competition=International Cup, " \
+                                     "round=First Round, group=C, matchday=2, date=1997-11-12)>"
     assert match_from_db.season.name == "1997-1998"
-    assert match_from_db.competition.confederation.value == u"FIFA"
-    assert match_from_db.venue.name == u"Emirates Stadium"
-    assert match_from_db.home_manager.full_name == u"Arsène Wenger"
-    assert match_from_db.away_manager.full_name == u"Gary Simpson"
-    assert match_from_db.referee.full_name == u"Pierluigi Collina"
+    assert match_from_db.competition.confederation.value == "FIFA"
+    assert match_from_db.venue.name == "Emirates Stadium"
+    assert match_from_db.home_manager.full_name == "Arsène Wenger"
+    assert match_from_db.away_manager.full_name == "Gary Simpson"
+    assert match_from_db.referee.full_name == "Pierluigi Collina"
 
 
 @natl_only
@@ -88,15 +88,15 @@ def test_natl_knockout_match_insert(session, national_data):
     match_from_db = session.query(mn.NationalKnockoutMatches).filter_by(ko_round=enums.KnockoutRoundType.semifinal)
 
     assert match_from_db.count() == 1
-    assert unicode(match_from_db[0]) == u"<NationalKnockoutMatch(home=France, away=Mexico, " \
-                                        u"competition=International Cup, " \
-                                        u"round=Semi-Final (1/2), matchday=1, date=1997-11-12)>"
+    assert str(match_from_db[0]) == "<NationalKnockoutMatch(home=France, away=Mexico, " \
+                                        "competition=International Cup, " \
+                                        "round=Semi-Final (1/2), matchday=1, date=1997-11-12)>"
     assert match_from_db[0].season.name == "1997-1998"
-    assert match_from_db[0].competition.confederation.value == u"FIFA"
-    assert match_from_db[0].venue.name == u"Emirates Stadium"
-    assert match_from_db[0].home_manager.full_name == u"Arsène Wenger"
-    assert match_from_db[0].away_manager.full_name == u"Gary Simpson"
-    assert match_from_db[0].referee.full_name == u"Pierluigi Collina"
+    assert match_from_db[0].competition.confederation.value == "FIFA"
+    assert match_from_db[0].venue.name == "Emirates Stadium"
+    assert match_from_db[0].home_manager.full_name == "Arsène Wenger"
+    assert match_from_db[0].away_manager.full_name == "Gary Simpson"
+    assert match_from_db[0].referee.full_name == "Pierluigi Collina"
 
 
 @natl_only
@@ -110,7 +110,7 @@ def test_natl_match_lineup_insert(session, national_data, person_data, position_
     session.add(match)
     session.commit()
 
-    nation_from_db = session.query(mco.Countries).filter(mco.Countries.name == u"Mexico").one()
+    nation_from_db = session.query(mco.Countries).filter(mco.Countries.name == "Mexico").one()
 
     player_data = person_data['player'][0]
     del player_data['country']
@@ -131,8 +131,8 @@ def test_natl_match_lineup_insert(session, national_data, person_data, position_
         filter(mn.NationalGroupMatches.id == match.id)
 
     assert lineup_from_db.count() == 1
-    assert unicode(lineup_from_db[0]) == u"<NationalMatchLineup(match={}, player=Miguel Ángel Ponce, team=Mexico, " \
-                                         u"position=Left back, starter=False, captain=False)>".format(match.id)
+    assert str(lineup_from_db[0]) == "<NationalMatchLineup(match={}, player=Miguel Ángel Ponce, team=Mexico, " \
+                                         "position=Left back, starter=False, captain=False)>".format(match.id)
 
 
 @natl_only
@@ -519,4 +519,4 @@ def test_natl_penalty_shootout_opener_insert(session, national_data):
     shootout_from_db = session.query(mn.NationalPenaltyShootoutOpeners)\
         .filter(mn.NationalPenaltyShootoutOpeners.match_id == match.id).one()
 
-    assert unicode(shootout_from_db) == u"<NationalPenaltyShootoutOpener(match={}, team=Mexico)>".format(match.id)
+    assert str(shootout_from_db) == "<NationalPenaltyShootoutOpener(match={}, team=Mexico)>".format(match.id)

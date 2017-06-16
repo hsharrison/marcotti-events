@@ -189,7 +189,7 @@ class MarcottiLoad(WorkflowBase):
                         filter(mcp.Players.person_id == mcp.Persons.person_id).\
                         filter(mcp.Players.id == player_id)
                     for rec in updated_records:
-                        for field, value in player_dict.items():
+                        for field, value in list(player_dict.items()):
                             setattr(rec, field, value)
         if self.session.dirty:
             self.session.commit()
@@ -233,7 +233,7 @@ class MarcottiLoad(WorkflowBase):
                         filter(mcp.Managers.person_id == mcp.Persons.person_id).\
                         filter(mcp.Managers.id == manager_id)
                     for rec in updated_records:
-                        for field, value in manager_dict.items():
+                        for field, value in list(manager_dict.items()):
                             setattr(rec, field, value)
         if self.session.dirty:
             self.session.commit()
@@ -269,7 +269,7 @@ class MarcottiLoad(WorkflowBase):
                         filter(mcp.Referees.person_id == mcp.Persons.person_id). \
                         filter(mcp.Referees.id == referee_id)
                     for rec in updated_records:
-                        for field, value in referee_dict.items():
+                        for field, value in list(referee_dict.items()):
                             setattr(rec, field, value)
         if self.session.dirty:
             self.session.commit()

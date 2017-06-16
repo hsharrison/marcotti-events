@@ -32,11 +32,11 @@ class Clubs(ClubSchema):
     Index('clubs_indx', 'name', 'country_id')
 
     def __repr__(self):
-        return u"<Club(name={0}, short_name={1}, country={2})>".format(
+        return "<Club(name={0}, short_name={1}, country={2})>".format(
             self.name, self.short_name, self.country.name).encode('utf-8')
 
     def __unicode__(self):
-        return u"<Club(name={0}, country={1})>".format(self.name, self.country.name)
+        return "<Club(name={0}, country={1})>".format(self.name, self.country.name)
 
 
 class ClubMap(BaseSchema):
@@ -132,12 +132,12 @@ class ClubFriendlyMatches(FriendlyMixin, ClubMatchMixin, ClubSchema, mcm.Matches
     Index('club_friendly_indx', 'home_team_id', 'away_team_id')
 
     def __repr__(self):
-        return u"<ClubFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
+        return "<ClubFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.date.isoformat()
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<ClubFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
+        return "<ClubFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.date.isoformat()
         )
 
@@ -151,12 +151,12 @@ class ClubLeagueMatches(LeagueMixin, ClubMatchMixin, ClubSchema, mcm.LeagueMatch
     Index('club_league_indx', 'matchday', 'home_team_id', 'away_team_id')
 
     def __repr__(self):
-        return u"<ClubLeagueMatch(home={}, away={}, competition={}, matchday={}, date={})>".format(
+        return "<ClubLeagueMatch(home={}, away={}, competition={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.matchday, self.date.isoformat()
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<ClubLeagueMatch(home={}, away={}, competition={}, matchday={}, date={})>".format(
+        return "<ClubLeagueMatch(home={}, away={}, competition={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.matchday, self.date.isoformat()
         )
 
@@ -170,13 +170,13 @@ class ClubGroupMatches(GroupMixin, ClubMatchMixin, ClubSchema, mcm.GroupMatches,
     Index('club_group_indx', 'group_round', 'group', 'home_team_id', 'away_team_id')
 
     def __repr__(self):
-        return u"<ClubGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
+        return "<ClubGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.group_round.value,
             self.group, self.matchday, self.date.isoformat()
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<ClubGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
+        return "<ClubGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.group_round.value,
             self.group, self.matchday, self.date.isoformat()
         )
@@ -191,13 +191,13 @@ class ClubKnockoutMatches(KnockoutMixin, ClubMatchMixin, ClubSchema, mcm.Knockou
     Index('club_knockout_indx', 'ko_round', 'matchday', 'home_team_id', 'away_team_id')
 
     def __repr__(self):
-        return u"<ClubKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
+        return "<ClubKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name,
             self.ko_round.value, self.matchday, self.date.isoformat()
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<ClubKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
+        return "<ClubKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name,
             self.ko_round.value, self.matchday, self.date.isoformat()
         )
@@ -212,12 +212,12 @@ class ClubMatchLineups(ClubMixin, ClubSchema, mcm.MatchLineups):
     team = relationship('Clubs', foreign_keys="ClubMatchLineups.team_id", backref=backref("lineups"))
 
     def __repr__(self):
-        return u"<ClubMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
+        return "<ClubMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
             self.match_id, self.full_name, self.team.name, self.position.name, self.is_starting, self.is_captain
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<ClubMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
+        return "<ClubMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
             self.match_id, self.full_name, self.team.name, self.position.name, self.is_starting, self.is_captain
         )
 

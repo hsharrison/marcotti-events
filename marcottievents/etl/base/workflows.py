@@ -58,10 +58,10 @@ class WorkflowBase(object):
         try:
             record_id = self.session.query(model).filter_by(**conditions).one().id
         except NoResultFound as ex:
-            print "{} has no records in Marcotti database for: {}".format(model.__name__, conditions)
+            print("{} has no records in Marcotti database for: {}".format(model.__name__, conditions))
             return None
         except MultipleResultsFound as ex:
-            print "{} has multiple records in Marcotti database for: {}".format(model.__name__, conditions)
+            print("{} has multiple records in Marcotti database for: {}".format(model.__name__, conditions))
             return None
         return record_id
 

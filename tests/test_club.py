@@ -21,7 +21,7 @@ def club_match_lineup(session, club_data, person_data, position_data):
     session.add(match)
     session.commit()
 
-    club = session.query(mc.Clubs).filter(mc.Clubs.name == u"Arsenal FC").one()
+    club = session.query(mc.Clubs).filter(mc.Clubs.name == "Arsenal FC").one()
 
     lineups = [
         mc.ClubMatchLineups(
@@ -41,32 +41,32 @@ def club_match_lineup(session, club_data, person_data, position_data):
 
 @club_only
 def test_club_insert(session):
-    club = mc.Clubs(name=u"Arsenal",
-                    country=mco.Countries(name=u"England", confederation=enums.ConfederationType.europe))
+    club = mc.Clubs(name="Arsenal",
+                    country=mco.Countries(name="England", confederation=enums.ConfederationType.europe))
     session.add(club)
 
     result = session.query(mc.Clubs).one()
-    assert result.name == u"Arsenal"
+    assert result.name == "Arsenal"
     assert repr(result) == "<Club(name=Arsenal, country=England)>"
 
 
 @club_only
 def test_club_unicode_insert(session):
-    club = mc.Clubs(name=u"Фк Спартак Москва",
-                    country=mco.Countries(name=u"Russia", confederation=enums.ConfederationType.europe))
+    club = mc.Clubs(name="Фк Спартак Москва",
+                    country=mco.Countries(name="Russia", confederation=enums.ConfederationType.europe))
     session.add(club)
 
-    result = session.query(mc.Clubs).join(mco.Countries).filter(mco.Countries.name == u"Russia").one()
+    result = session.query(mc.Clubs).join(mco.Countries).filter(mco.Countries.name == "Russia").one()
 
-    assert result.name == u"Фк Спартак Москва"
-    assert unicode(result) == u"<Club(name=Фк Спартак Москва, country=Russia)>"
+    assert result.name == "Фк Спартак Москва"
+    assert str(result) == "<Club(name=Фк Спартак Москва, country=Russia)>"
 
 
 @club_only
 def test_club_name_overflow(session):
     too_long_name = "blahblah" * 8
     too_long_club = mc.Clubs(name=too_long_name,
-                             country=mco.Countries(name=u"foo", confederation=enums.ConfederationType.fifa))
+                             country=mco.Countries(name="foo", confederation=enums.ConfederationType.fifa))
     with pytest.raises(DataError):
         session.add(too_long_club)
         session.commit()
@@ -80,14 +80,14 @@ def test_club_friendly_match_insert(session, club_data):
     match_from_db = session.query(mc.ClubFriendlyMatches).one()
 
     assert match_from_db.season.name == "2014-2015"
-    assert match_from_db.competition.name == u"Test Competition"
-    assert match_from_db.competition.country.name == u"England"
-    assert match_from_db.venue.name == u"Emirates Stadium"
-    assert match_from_db.home_team.name == u"Arsenal FC"
-    assert match_from_db.away_team.name == u"Lincoln City FC"
-    assert match_from_db.home_manager.full_name == u"Arsène Wenger"
-    assert match_from_db.away_manager.full_name == u"Gary Simpson"
-    assert match_from_db.referee.full_name == u"Mark Clattenburg"
+    assert match_from_db.competition.name == "Test Competition"
+    assert match_from_db.competition.country.name == "England"
+    assert match_from_db.venue.name == "Emirates Stadium"
+    assert match_from_db.home_team.name == "Arsenal FC"
+    assert match_from_db.away_team.name == "Lincoln City FC"
+    assert match_from_db.home_manager.full_name == "Arsène Wenger"
+    assert match_from_db.away_manager.full_name == "Gary Simpson"
+    assert match_from_db.referee.full_name == "Mark Clattenburg"
 
 
 @club_only
@@ -101,14 +101,14 @@ def test_club_league_match_insert(session, club_data):
     assert match_from_db.phase == "league"
     assert match_from_db.matchday == 5
     assert match_from_db.season.name == "2014-2015"
-    assert match_from_db.competition.name == u"Test Competition"
-    assert match_from_db.competition.country.name == u"England"
-    assert match_from_db.venue.name == u"Emirates Stadium"
-    assert match_from_db.home_team.name == u"Arsenal FC"
-    assert match_from_db.away_team.name == u"Lincoln City FC"
-    assert match_from_db.home_manager.full_name == u"Arsène Wenger"
-    assert match_from_db.away_manager.full_name == u"Gary Simpson"
-    assert match_from_db.referee.full_name == u"Mark Clattenburg"
+    assert match_from_db.competition.name == "Test Competition"
+    assert match_from_db.competition.country.name == "England"
+    assert match_from_db.venue.name == "Emirates Stadium"
+    assert match_from_db.home_team.name == "Arsenal FC"
+    assert match_from_db.away_team.name == "Lincoln City FC"
+    assert match_from_db.home_manager.full_name == "Arsène Wenger"
+    assert match_from_db.away_manager.full_name == "Gary Simpson"
+    assert match_from_db.referee.full_name == "Mark Clattenburg"
 
 
 @club_only
@@ -123,18 +123,18 @@ def test_club_group_match_insert(session, club_data):
     match_from_db = session.query(mc.ClubGroupMatches).one()
 
     assert match_from_db.phase == "group"
-    assert match_from_db.group_round.value == u"Group Stage"
+    assert match_from_db.group_round.value == "Group Stage"
     assert match_from_db.group == "A"
     assert match_from_db.matchday == 1
     assert match_from_db.season.name == "2014-2015"
-    assert match_from_db.competition.name == u"Test Competition"
-    assert match_from_db.competition.country.name == u"England"
-    assert match_from_db.venue.name == u"Emirates Stadium"
-    assert match_from_db.home_team.name == u"Arsenal FC"
-    assert match_from_db.away_team.name == u"Lincoln City FC"
-    assert match_from_db.home_manager.full_name == u"Arsène Wenger"
-    assert match_from_db.away_manager.full_name == u"Gary Simpson"
-    assert match_from_db.referee.full_name == u"Mark Clattenburg"
+    assert match_from_db.competition.name == "Test Competition"
+    assert match_from_db.competition.country.name == "England"
+    assert match_from_db.venue.name == "Emirates Stadium"
+    assert match_from_db.home_team.name == "Arsenal FC"
+    assert match_from_db.away_team.name == "Lincoln City FC"
+    assert match_from_db.home_manager.full_name == "Arsène Wenger"
+    assert match_from_db.away_manager.full_name == "Gary Simpson"
+    assert match_from_db.referee.full_name == "Mark Clattenburg"
 
 
 @club_only
@@ -148,18 +148,18 @@ def test_club_knockout_match_insert(session, club_data):
         mc.ClubKnockoutMatches.ko_round == enums.KnockoutRoundType.quarterfinal)
 
     assert match_from_db[0].phase == "knockout"
-    assert match_from_db[0].ko_round.value == u"Quarterfinal (1/4)"
+    assert match_from_db[0].ko_round.value == "Quarterfinal (1/4)"
     assert match_from_db[0].matchday == 1
     assert match_from_db[0].extra_time is False
     assert match_from_db[0].season.name == "2014-2015"
-    assert match_from_db[0].competition.name == u"Test Competition"
-    assert match_from_db[0].competition.country.name == u"England"
-    assert match_from_db[0].venue.name == u"Emirates Stadium"
-    assert match_from_db[0].home_team.name == u"Arsenal FC"
-    assert match_from_db[0].away_team.name == u"Lincoln City FC"
-    assert match_from_db[0].home_manager.full_name == u"Arsène Wenger"
-    assert match_from_db[0].away_manager.full_name == u"Gary Simpson"
-    assert match_from_db[0].referee.full_name == u"Mark Clattenburg"
+    assert match_from_db[0].competition.name == "Test Competition"
+    assert match_from_db[0].competition.country.name == "England"
+    assert match_from_db[0].venue.name == "Emirates Stadium"
+    assert match_from_db[0].home_team.name == "Arsenal FC"
+    assert match_from_db[0].away_team.name == "Lincoln City FC"
+    assert match_from_db[0].home_manager.full_name == "Arsène Wenger"
+    assert match_from_db[0].away_manager.full_name == "Gary Simpson"
+    assert match_from_db[0].referee.full_name == "Mark Clattenburg"
 
 
 @club_only
@@ -170,7 +170,7 @@ def test_club_match_lineup_insert(session, club_data, person_data, position_data
     session.add(player)
     session.commit()
 
-    club_from_db = session.query(mc.Clubs).filter(mc.Clubs.name == u"Arsenal FC").one()
+    club_from_db = session.query(mc.Clubs).filter(mc.Clubs.name == "Arsenal FC").one()
 
     lineup = mc.ClubMatchLineups(
         match_id=match.id,
@@ -184,8 +184,8 @@ def test_club_match_lineup_insert(session, club_data, person_data, position_data
         .filter(mc.ClubLeagueMatches.id == match.id)
 
     assert lineup_from_db.count() == 1
-    assert unicode(lineup_from_db[0]) == u"<ClubMatchLineup(match={}, player=Miguel Ángel Ponce, team=Arsenal FC, " \
-                                         u"position=Left back, starter=False, captain=False)>".format(match.id)
+    assert str(lineup_from_db[0]) == "<ClubMatchLineup(match={}, player=Miguel Ángel Ponce, team=Arsenal FC, " \
+                                         "position=Left back, starter=False, captain=False)>".format(match.id)
 
 
 @club_only
@@ -413,4 +413,4 @@ def test_club_penalty_shootout_opener_insert(session, club_data):
     shootout_from_db = session.query(mc.ClubPenaltyShootoutOpeners)\
         .filter(mc.ClubPenaltyShootoutOpeners.match_id == match.id).one()
 
-    assert unicode(shootout_from_db) == u"<ClubPenaltyShootoutOpener(match={}, team=Arsenal FC)>".format(match.id)
+    assert str(shootout_from_db) == "<ClubPenaltyShootoutOpener(match={}, team=Arsenal FC)>".format(match.id)

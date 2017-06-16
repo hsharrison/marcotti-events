@@ -83,12 +83,12 @@ class NationalFriendlyMatches(FriendlyMixin, NationalMatchMixin, NatlSchema, mcm
     Index('natl_friendly_indx', 'home_team_id', 'away_team_id')
 
     def __repr__(self):
-        return u"<NationalFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
+        return "<NationalFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.date.isoformat()
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<NationalFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
+        return "<NationalFriendlyMatch(home={}, away={}, competition={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.date.isoformat()
         )
 
@@ -102,13 +102,13 @@ class NationalGroupMatches(GroupMixin, NationalMatchMixin, NatlSchema, mcm.Group
     Index('natl_group_indx', 'group_round', 'group', 'home_team_id', 'away_team_id')
 
     def __repr__(self):
-        return u"<NationalGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
+        return "<NationalGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.group_round.value,
             self.group, self.matchday, self.date.isoformat()
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<NationalGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
+        return "<NationalGroupMatch(home={}, away={}, competition={}, round={}, group={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name, self.group_round.value,
             self.group, self.matchday, self.date.isoformat()
         )
@@ -123,13 +123,13 @@ class NationalKnockoutMatches(KnockoutMixin, NationalMatchMixin, NatlSchema, mcm
     Index('natl_knockout_indx', 'ko_round', 'matchday', 'home_team_id', 'away_team_id')
 
     def __repr__(self):
-        return u"<NationalKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
+        return "<NationalKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name,
             self.ko_round.value, self.matchday, self.date.isoformat()
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<NationalKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
+        return "<NationalKnockoutMatch(home={}, away={}, competition={}, round={}, matchday={}, date={})>".format(
             self.home_team.name, self.away_team.name, self.competition.name,
             self.ko_round.value, self.matchday, self.date.isoformat()
         )
@@ -144,12 +144,12 @@ class NationalMatchLineups(NationalMixin, NatlSchema, mcm.MatchLineups):
     team = relationship('Countries', foreign_keys="NationalMatchLineups.team_id", backref=backref("lineups"))
 
     def __repr__(self):
-        return u"<NationalMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
+        return "<NationalMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
             self.match_id, self.full_name, self.team.name, self.position.name, self.is_starting, self.is_captain
         ).encode('utf-8')
 
     def __unicode__(self):
-        return u"<NationalMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
+        return "<NationalMatchLineup(match={}, player={}, team={}, position={}, starter={}, captain={})>".format(
             self.match_id, self.full_name, self.team.name, self.position.name, self.is_starting, self.is_captain
         )
 
